@@ -186,16 +186,10 @@ namespace GoogleBigQuerySupplyCollector
 
         public override bool TestConnection(DataContainer container) {
             using (var client = BuildClient(container)) {
-                var projects = client.ListProjects();
+                var datasets = client.ListDatasets().ToArray();
 
-                foreach (var project in projects) {
-                    if (project.ProjectId.Equals(client.ProjectId)) {
-                        return true;
-                    }
-                }
+                return datasets.Length > 0;
             }
-
-            return false;
         }
     }
 }
