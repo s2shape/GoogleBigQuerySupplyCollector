@@ -94,7 +94,6 @@ namespace GoogleBigQuerySupplyCollectorTests
 
             var samples = _instance.CollectSample(entity, 2);
             Assert.Equal(2, samples.Count);
-            Assert.Contains("sally@example.com", samples);
         }
 
     }

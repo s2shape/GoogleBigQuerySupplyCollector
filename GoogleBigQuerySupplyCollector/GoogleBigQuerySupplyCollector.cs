@@ -50,8 +50,29 @@ namespace GoogleBigQuerySupplyCollector
         public override List<string> CollectSample(DataEntity dataEntity, int sampleSize) {
             var samples = new List<string>();
 
+            long rows = 0;
             using (var client = BuildClient(dataEntity.Container)) {
-                var job = client.CreateQueryJob($"SELECT {dataEntity.Name} FROM {dataEntity.Collection.Name} LIMIT {sampleSize}", null);
+                var parts = dataEntity.Collection.Name.Split(".");
+                if (parts.Length == 2) {
+                    var tableRef = client.GetTable(parts[0], parts[1]);
+
+                    if (tableRef != null) {
+                        rows = (long)tableRef.Resource.NumRows.GetValueOrDefault();
+                    }
+                }
+            }
+
+            using (var client = BuildClient(dataEntity.Container)) {
+                string sampling = "";
+                if (rows > 0) {
+                    double pct = 0.05 + (double)sampleSize / rows;
+                    if (pct >= 1)
+                        pct = 0.999;
+
+                    sampling = $"WHERE RAND() < {pct}".Replace(",", ".");
+                }
+
+                var job = client.CreateQueryJob($"SELECT {dataEntity.Name} FROM {dataEntity.Collection.Name} {sampling} LIMIT {sampleSize}", null);
                 var results = job.GetQueryResults();
 
                 foreach (var result in results) {
