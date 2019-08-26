@@ -1,4 +1,8 @@
 using System;
+using System.IO;
+using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using S2.BlackSwan.SupplyCollector.Models;
 using Xunit;
 
@@ -9,12 +13,22 @@ namespace GoogleBigQuerySupplyCollectorTests
         private readonly GoogleBigQuerySupplyCollector.GoogleBigQuerySupplyCollector _instance;
         public readonly DataContainer _container;
 
+        private string GetProjectId(string filename) {
+            using (var file = File.OpenText(filename))
+            {
+                var reader = new JsonTextReader(file);
+                var jObject = JObject.Load(reader);
+
+                return jObject.GetValue("project_id").ToString();
+            }
+        }
+
         public GoogleBigQuerySupplyCollectorTests()
         {
             _instance = new GoogleBigQuerySupplyCollector.GoogleBigQuerySupplyCollector();
             _container = new DataContainer()
             {
-                ConnectionString = _instance.BuildConnectionString("service-credentials.json", "ancient-link-250615") //TODO: read project id from json
+                ConnectionString = _instance.BuildConnectionString("service-credentials.json", GetProjectId("service-credentials.json"))
             };
         }
 
