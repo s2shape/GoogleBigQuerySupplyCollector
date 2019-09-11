@@ -15,6 +15,6 @@ build:
 test:
   stage: test
   script:
-    - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/service-credentials.json"
     - dotnet build
+    - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/service-credentials.json"
     - dotnet test
