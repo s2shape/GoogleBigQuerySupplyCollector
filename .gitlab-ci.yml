@@ -17,5 +17,4 @@ test:
   script:
     - dotnet build
     - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/service-credentials.json"
-    - cat GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/service-credentials.json
     - dotnet test
