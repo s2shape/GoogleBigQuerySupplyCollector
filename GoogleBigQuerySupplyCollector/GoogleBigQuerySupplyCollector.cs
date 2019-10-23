@@ -22,7 +22,7 @@ namespace GoogleBigQuerySupplyCollector
             return $"Certificate={certificateFilePath};Project={project}";
         }
 
-        private BigQueryClient BuildClient(DataContainer container) {
+        public static BigQueryClient BuildClient(DataContainer container) {
             string certificateFilePath = null;
             string projectId = null;
 

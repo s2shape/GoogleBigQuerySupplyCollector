@@ -1,4 +1,4 @@
-image: microsoft/dotnet:latest
+image: docker.pkg.github.com/s2shape/docker-images/s2shape-test-harness:latest
 
 stages:
   - build
@@ -15,6 +15,29 @@ build:
 test:
   stage: test
   script:
+    - ROOT_PROJECT_PATH=$(pwd)
     - dotnet build
-    - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/service-credentials.json"
+    - dotnet publish
+    - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/publish/service-credentials.json"
+    - cd $ROOT_PROJECT_PATH/GoogleBigQuerySupplyCollectorLoader/bin/Debug/netcoreapp2.2/publish
+    - cp -f /SupplyCollectorDataLoader/SupplyCollectorDataLoader/bin/Debug/netcoreapp2.2/SupplyCollectorDataLoader.runtimeconfig.json .
+    - dotnet SupplyCollectorDataLoader.dll -init GoogleBigQuerySupplyCollector "Certificate=service-credentials.json;Project=ancient-link-250615"
+    - dotnet SupplyCollectorDataLoader.dll -xunit GoogleBigQuerySupplyCollector "Certificate=service-credentials.json;Project=ancient-link-250615"
+    - cd $ROOT_PROJECT_PATH
     - dotnet test
+
+
+load_test:
+  stage: test
+  script:
+    - ROOT_PROJECT_PATH=$(pwd)
+    - dotnet build
+    - dotnet publish
+    - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/publish/service-credentials.json"
+    - cd $ROOT_PROJECT_PATH/GoogleBigQuerySupplyCollectorLoader/bin/Debug/netcoreapp2.2/publish
+    - cp -f /SupplyCollectorDataLoader/SupplyCollectorDataLoader/bin/Debug/netcoreapp2.2/SupplyCollectorDataLoader.runtimeconfig.json .
+    - dotnet SupplyCollectorDataLoader.dll -init GoogleBigQuerySupplyCollector "Certificate=service-credentials.json;Project=ancient-link-250615"
+    - dotnet SupplyCollectorDataLoader.dll -xunit GoogleBigQuerySupplyCollector "Certificate=service-credentials.json;Project=ancient-link-250615"
+    - dotnet SupplyCollectorDataLoader.dll -samples GoogleBigQuerySupplyCollector "Certificate=service-credentials.json;Project=ancient-link-250615" TestCollection Test1:int,Test2:string,Test3:bool,Test4:double,Test5 1000000
+    - cd $ROOT_PROJECT_PATH/GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/publish
+    - SupplyCollectorTestHarness
