@@ -19,7 +19,7 @@ test:
     - ROOT_PROJECT_PATH=$(pwd)
     - dotnet build
     - dotnet publish
-    - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/publish/service-credentials.json"
+    - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/service-credentials.json"
     - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorLoader/bin/Debug/netcoreapp2.2/publish/service-credentials.json"
     - cd $ROOT_PROJECT_PATH/GoogleBigQuerySupplyCollectorLoader/bin/Debug/netcoreapp2.2/publish
     - cp -f /SupplyCollectorDataLoader/SupplyCollectorDataLoader/bin/Debug/netcoreapp2.2/SupplyCollectorDataLoader.runtimeconfig.json .
@@ -35,7 +35,7 @@ load_test:
     - ROOT_PROJECT_PATH=$(pwd)
     - dotnet build
     - dotnet publish
-    - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/publish/service-credentials.json"
+    - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/service-credentials.json"
     - echo "$GCP_CREDENTIALS" > "GoogleBigQuerySupplyCollectorLoader/bin/Debug/netcoreapp2.2/publish/service-credentials.json"
     - cd $ROOT_PROJECT_PATH/GoogleBigQuerySupplyCollectorLoader/bin/Debug/netcoreapp2.2/publish
     - cp -f /SupplyCollectorDataLoader/SupplyCollectorDataLoader/bin/Debug/netcoreapp2.2/SupplyCollectorDataLoader.runtimeconfig.json .
