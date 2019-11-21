@@ -41,3 +41,4 @@ Add `BigQueryServiceAccountRole` role
 
 ## Known issues
 - Disabled data metrics test. GBQ returns 0 in numRows right after table is loaded. Couldn't find a way to make it calculate metrics
+- Unable to load 100k records within 15 minutes
