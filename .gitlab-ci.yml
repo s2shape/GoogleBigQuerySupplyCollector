@@ -27,7 +27,9 @@ test:
     - dotnet SupplyCollectorDataLoader.dll -xunit GoogleBigQuerySupplyCollector "Certificate=service-credentials.json;Project=ancient-link-250615"
     - cd $ROOT_PROJECT_PATH
     - dotnet test
-
+  except:
+    changes:
+      - "*.md"
 
 load_test:
   stage: load_test
@@ -44,3 +46,6 @@ load_test:
     - dotnet SupplyCollectorDataLoader.dll -samples GoogleBigQuerySupplyCollector "Certificate=service-credentials.json;Project=ancient-link-250615" TestCollection Test1:int,Test2:string,Test3:bool,Test4:double,Test5 1000000
     - cd $ROOT_PROJECT_PATH/GoogleBigQuerySupplyCollectorTests/bin/Debug/netcoreapp2.2/publish
     - SupplyCollectorTestHarness
+  except:
+    changes:
+      - "*.md"

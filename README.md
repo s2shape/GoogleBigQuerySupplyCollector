@@ -4,7 +4,7 @@ A supply collector designed to connect to Google BigQuery
 ## Building
 Run `dotnet build` in the root project folder
 
-## Testing
+## Testing - manual mode
 1) Create a project in Google Cloud Platform https://console.cloud.google.com
 2) Create a BigQuery service if necessary at https://console.cloud.google.com/bigquery
 3) Create `TESTDATASET` dataset 
@@ -38,3 +38,6 @@ Add `BigQueryServiceAccountRole` role
 ![Share dataset](/docs/share_dataset.png?raw=true)
 
 10) Run `dotnet test`
+
+## Known issues
+- Disabled data metrics test. GBQ returns 0 in numRows right after table is loaded. Couldn't find a way to make it calculate metrics
