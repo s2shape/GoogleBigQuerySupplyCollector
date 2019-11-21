@@ -20,7 +20,7 @@ namespace GoogleBigQuerySupplyCollectorLoader
                 GoogleBigQuerySupplyCollector.GoogleBigQuerySupplyCollector.BuildClient(dataEntities[0].Container))
             {
 
-                var dataset = client.GetOrCreateDataset("test");
+                var dataset = client.GetOrCreateDataset("TESTDATASET");
                 var table = dataset.GetTable(dataEntities[0].Collection.Name);
                 table?.Delete();
 
@@ -145,7 +145,7 @@ namespace GoogleBigQuerySupplyCollectorLoader
             using (var client =
                 GoogleBigQuerySupplyCollector.GoogleBigQuerySupplyCollector.BuildClient(dataContainer)) {
 
-                var dataset = client.GetOrCreateDataset("test");
+                var dataset = client.GetOrCreateDataset("TESTDATASET");
 
                 LoadFile("CONTACTS_AUDIT.CSV", dataset);
                 LoadFile("EMAILS.CSV", dataset);
