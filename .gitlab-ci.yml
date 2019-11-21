@@ -12,6 +12,9 @@ build:
   stage: build
   script:
     - dotnet build
+  except:
+    changes:
+      - "*.md"
 
 test:
   stage: test
