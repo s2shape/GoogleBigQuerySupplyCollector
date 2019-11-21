@@ -61,7 +61,7 @@ namespace GoogleBigQuerySupplyCollectorTests
             }
         }
 
-        [Fact]
+        /*[Fact]
         public void GetDataCollectionMetricsTest()
         {
             var metrics = new DataCollectionMetrics[] {
@@ -84,7 +84,7 @@ namespace GoogleBigQuerySupplyCollectorTests
                 Assert.Equal(metric.RowCount, resultMetric.RowCount);
                 Assert.Equal(metric.TotalSpaceKB, resultMetric.TotalSpaceKB, 2);
             }
-        }
+        }*/
 
         [Fact]
         public void CollectSampleTest()
