@@ -21,8 +21,6 @@ namespace GoogleBigQuerySupplyCollectorLoader
             {
 
                 var dataset = client.GetOrCreateDataset("TESTDATASET");
-                var table = dataset.GetTable(dataEntities[0].Collection.Name);
-                table?.Delete();
 
                 var fields = new List<TableFieldSchema>();
                 fields.Add(new TableFieldSchema() {Name = "Id", Type = "INTEGER" });
@@ -58,7 +56,7 @@ namespace GoogleBigQuerySupplyCollectorLoader
                     fields.Add(new TableFieldSchema() {Name = dataEntity.Name, Type = dataType});
                 }
 
-                table = dataset.CreateTable(dataEntities[0].Collection.Name, new TableSchema() {
+                var table = dataset.GetOrCreateTable(dataEntities[0].Collection.Name, new TableSchema() {
                     Fields = fields
                 });
 
