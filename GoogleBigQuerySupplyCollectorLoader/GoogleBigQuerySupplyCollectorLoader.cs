@@ -118,12 +118,9 @@ namespace GoogleBigQuerySupplyCollectorLoader
                 var columnsNames = header.Split(",");
 
                 var tableName = Path.GetFileNameWithoutExtension(fileName);
-                var table = dataset.GetTable(tableName);
-                table?.Delete();
-
-                table = dataset.CreateTable(tableName,
-                    new TableSchema() {
-                        Fields = columnsNames.Select(x => new TableFieldSchema() {Name = x, Type = "STRING"}).ToList()
+                var table = dataset.GetOrCreateTable(tableName, new TableSchema()
+                    {
+                        Fields = columnsNames.Select(x => new TableFieldSchema() { Name = x, Type = "STRING" }).ToList()
                     });
 
                 while (!reader.EndOfStream) {
