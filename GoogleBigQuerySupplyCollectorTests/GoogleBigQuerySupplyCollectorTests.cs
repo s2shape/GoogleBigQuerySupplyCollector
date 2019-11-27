@@ -50,8 +50,8 @@ namespace GoogleBigQuerySupplyCollectorTests
         public void GetTableNamesTest()
         {
             var (tables, elements) = _instance.GetSchema(_container);
-            Assert.Equal(3, tables.Count);
-            Assert.Equal(156, elements.Count);
+            Assert.Equal(4, tables.Count);
+            Assert.Equal(161, elements.Count);
 
             var tableNames = new string[] { "TESTDATASET.LEADS", "TESTDATASET.EMAILS", "TESTDATASET.CONTACTS_AUDIT" };
             foreach (var tableName in tableNames)
