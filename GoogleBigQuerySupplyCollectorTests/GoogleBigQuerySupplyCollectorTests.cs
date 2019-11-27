@@ -72,10 +72,8 @@ namespace GoogleBigQuerySupplyCollectorTests
                 new DataCollectionMetrics()
                     {Name = "TESTDATASET.CONTACTS_AUDIT", RowCount = 200, TotalSpaceKB = 110.12M},
             };
-
             var result = _instance.GetDataCollectionMetrics(_container);
             Assert.Equal(metrics.Length, result.Count);
-
             foreach (var metric in metrics)
             {
                 var resultMetric = result.Find(x => x.Name.Equals(metric.Name));
