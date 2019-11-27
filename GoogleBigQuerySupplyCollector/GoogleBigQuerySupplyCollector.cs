@@ -102,7 +102,6 @@ namespace GoogleBigQuerySupplyCollector
                             RowCount = (long)tblSchema.Resource.NumRows.GetValueOrDefault(),
                             TotalSpaceKB = (decimal)tblSchema.Resource.NumBytes.GetValueOrDefault() / 1024
                         });
-                        
                     }
                 }
             }
