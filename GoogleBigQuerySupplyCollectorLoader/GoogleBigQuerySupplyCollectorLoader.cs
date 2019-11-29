@@ -63,9 +63,14 @@ namespace GoogleBigQuerySupplyCollectorLoader
                 long rows = 0;
                 var r = new Random();
 
+                var list = new List<BigQueryInsertRow>();
                 while (rows < count) {
-                    if (rows % 1000 == 0) {
+                    if (rows % 1000 == 0 || rows == count - 1) {
                         Console.Write(".");
+                        if (list.Count > 0) {
+                            client.InsertRows(table.Reference, list);
+                            list.Clear();
+                        }
                     }
 
                     var row = new BigQueryInsertRow();
@@ -101,7 +106,7 @@ namespace GoogleBigQuerySupplyCollectorLoader
                         row[dataEntity.Name] = val;
                     }
 
-                    table.InsertRow(row);
+                    list.Add(row);
 
                     rows++;
                 }
